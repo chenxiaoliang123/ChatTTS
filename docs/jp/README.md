@@ -4,7 +4,7 @@
 
 [![Huggingface](https://img.shields.io/badge/🤗%20-Models-yellow.svg?style=for-the-badge)](https://huggingface.co/2Noise/ChatTTS)
 
-[**English**](../../README.md) | [**简体中文**](../cn/README.md) | **日本語** | [**Русский**](../ru/README.md)
+[**English**](../../README.md) | [**简体中文**](../cn/README.md) | **日本語** | [**Русский**](../ru/README.md) | [**Español**](../es/README.md) | [**Français**](../fr/README.md)
 
 ChatTTSは、LLMアシスタントなどの対話シナリオ用に特別に設計されたテキストから音声へのモデルです。英語と中国語の両方をサポートしています。私たちのモデルは、中国語と英語で構成される100,000時間以上でトレーニングされています。**[HuggingFace](https://huggingface.co/2Noise/ChatTTS)**でオープンソース化されているバージョンは、40,000時間の事前トレーニングモデルで、SFTは行われていません。
 
@@ -34,9 +34,10 @@ ChatTTSは強力なテキストから音声へのシステムです。しかし�
 ```python
 import ChatTTS
 from IPython.display import Audio
+import torch
 
 chat = ChatTTS.Chat()
-chat.load_models(compile=False) # より良いパフォーマンスのためにTrueに設定
+chat.load(compile=False) # より良いパフォーマンスのためにTrueに設定
 
 texts = ["ここにテキストを入力してください",]
 
@@ -52,6 +53,7 @@ torchaudio.save("output1.wav", torch.from_numpy(wavs[0]), 24000)
 # ガウス分布から話者をサンプリングします。
 
 rand_spk = chat.sample_random_speaker()
+print(rand_spk) # save it for later timbre recovery
 
 params_infer_code = {
   'spk_emb': rand_spk, # サンプリングされた話者を追加
